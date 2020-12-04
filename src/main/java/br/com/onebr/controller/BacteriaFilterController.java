@@ -9,6 +9,7 @@ import br.com.onebr.enumeration.ResistomeType;
 import br.com.onebr.model.AntigenH;
 import br.com.onebr.model.AntigenO;
 import br.com.onebr.model.ClermontTyping;
+import br.com.onebr.model.EffluxPump;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Plasmidome;
 import br.com.onebr.model.SCCMecElement;
@@ -18,6 +19,7 @@ import br.com.onebr.model.Specie;
 import br.com.onebr.model.Virulome;
 import br.com.onebr.security.OneBrConstants.ROLE;
 import br.com.onebr.service.ClermontTypingService;
+import br.com.onebr.service.EffluxPumpService;
 import br.com.onebr.service.HeavyMetalService;
 import br.com.onebr.service.OriginService;
 import br.com.onebr.service.PlasmidomeService;
@@ -80,6 +82,9 @@ public class BacteriaFilterController {
 
     @Autowired
     private VirulomeService virulomeService;
+
+    @Autowired
+    private EffluxPumpService effluxPumpService;
 
     @Autowired
     private PlasmidomeService plasmidomeService;
@@ -185,6 +190,14 @@ public class BacteriaFilterController {
         final List<Virulome> virulomes = virulomeService.findAll();
 
         return ResponseEntity.ok(virulomes);
+    }
+
+    @GetMapping("/effluxPump")
+    @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
+    public ResponseEntity<List<EffluxPump>> getEffluxPump() {
+        final List<EffluxPump> effluxPumps = effluxPumpService.findAll();
+
+        return ResponseEntity.ok(effluxPumps);
     }
 
     @GetMapping("/plasmidome")

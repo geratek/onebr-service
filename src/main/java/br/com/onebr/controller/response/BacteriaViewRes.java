@@ -3,6 +3,7 @@ package br.com.onebr.controller.response;
 import br.com.onebr.model.Antibiogram;
 import br.com.onebr.model.City;
 import br.com.onebr.model.ClermontTyping;
+import br.com.onebr.model.EffluxPump;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Plasmidome;
 import br.com.onebr.model.SCCMecElement;
@@ -76,6 +77,9 @@ public class BacteriaViewRes {
 
     @JsonProperty("virulome")
     private Set<Virulome> virulomes;
+
+    @JsonProperty("efflux_pump")
+    private Set<EffluxPump> effluxPumps;
 
     @JsonProperty("resistome")
     private Resistome resistome;

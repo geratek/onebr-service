@@ -92,6 +92,10 @@ public class Bacteria {
     @JoinTable(name = "virulome_bacteria", joinColumns = @JoinColumn(name = "fk_bacteria"), inverseJoinColumns = @JoinColumn(name = "fk_virulome"))
     private Set<Virulome> virulomes;
 
+    @ManyToMany
+    @JoinTable(name = "efflux_pump_bacteria", joinColumns = @JoinColumn(name = "fk_bacteria"), inverseJoinColumns = @JoinColumn(name = "fk_efflux_pump"))
+    private Set<EffluxPump> effluxPumps;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_resistome")
     private Resistome resistome;

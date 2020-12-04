@@ -3,6 +3,7 @@ package br.com.onebr.controller.request;
 import br.com.onebr.model.Antibiogram;
 import br.com.onebr.model.City;
 import br.com.onebr.model.ClermontTyping;
+import br.com.onebr.model.EffluxPump;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Origin;
 import br.com.onebr.model.Plasmidome;
@@ -67,6 +68,8 @@ public class BacteriaPostReq {
     private Set<Plasmidome> plamidomes;
 
     private Set<Virulome> virulomes;
+
+    private Set<EffluxPump> effluxPumps;
 
     private Resistome resistome;
 

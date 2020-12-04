@@ -21,6 +21,7 @@ import br.com.onebr.repository.AntigenORepository;
 import br.com.onebr.repository.BacteriaRepository;
 import br.com.onebr.repository.CityRepository;
 import br.com.onebr.repository.ClermontTypingRepository;
+import br.com.onebr.repository.EffluxPumpRepository;
 import br.com.onebr.repository.HeavyMetalRepository;
 import br.com.onebr.repository.OriginRepository;
 import br.com.onebr.repository.PlasmidomeRepository;
@@ -78,6 +79,9 @@ public class BacteriaService {
 
     @Autowired
     private VirulomeRepository virulomeRepository;
+
+    @Autowired
+    private EffluxPumpRepository effluxPumpRepository;
 
     @Autowired
     private ClermontTypingRepository clermontTypingRepository;
@@ -179,6 +183,7 @@ public class BacteriaService {
             .st(bacteria.getSt())
             .plamidomes(bacteria.getPlamidomes())
             .virulomes(bacteria.getVirulomes())
+            .effluxPumps(bacteria.getEffluxPumps())
             .resistome(bacteria.getResistome())
             .kLocus(bacteria.getKLocus())
             .wzi(bacteria.getWzi())
@@ -245,6 +250,7 @@ public class BacteriaService {
             .st(bacteriaReq.getSt())
             .plamidomes(bacteriaReq.getPlamidomes())
             .virulomes(bacteriaReq.getVirulomes())
+            .effluxPumps(bacteriaReq.getEffluxPumps())
             .resistome(bacteriaReq.getResistome())
             .kLocus(bacteriaReq.getKLocus())
             .wzi(bacteriaReq.getWzi())
@@ -324,6 +330,13 @@ public class BacteriaService {
                 final List<Long> virulomeIds = x.stream().filter(y -> y.getId() != null).map(z -> z.getId()).collect(Collectors.toList());
                 if (!CollectionUtils.isEmpty(virulomeIds)) {
                     bacteria.setVirulomes(virulomeRepository.findAllByIdIn(virulomeIds));
+                }
+            });
+        Optional.ofNullable(bacteriaReq.getEffluxPumps())
+            .ifPresent(x -> {
+                final List<Long> effluxPumpIds = x.stream().filter(y -> y.getId() != null).map(z -> z.getId()).collect(Collectors.toList());
+                if (!CollectionUtils.isEmpty(effluxPumpIds)) {
+                    bacteria.setEffluxPumps(effluxPumpRepository.findAllByIdIn(effluxPumpIds));
                 }
             });
 
