@@ -72,6 +72,9 @@ public class BacteriaViewRes {
     @JsonProperty("st")
     private String st;
 
+    @JsonProperty("s_aureus_spa_type")
+    private String sAureusSpaType;
+
     @JsonProperty("plasmidome")
     private Set<Plasmidome> plamidomes;
 

@@ -24,6 +24,7 @@ import br.com.onebr.service.HeavyMetalService;
 import br.com.onebr.service.OriginService;
 import br.com.onebr.service.PlasmidomeService;
 import br.com.onebr.service.ResistomeService;
+import br.com.onebr.service.SAureusSpaTypeService;
 import br.com.onebr.service.SCCMecElementService;
 import br.com.onebr.service.SequencerService;
 import br.com.onebr.service.SerotypeService;
@@ -61,6 +62,9 @@ public class BacteriaFilterController {
 
     @Autowired
     private StService stService;
+
+    @Autowired
+    private SAureusSpaTypeService sAureusSpaTypeService;
 
     @Autowired
     private ClermontTypingService clermontTypingService;
@@ -126,6 +130,12 @@ public class BacteriaFilterController {
     @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
     public ResponseEntity<List<String>> getSts() {
         return ResponseEntity.ok(stService.findAll());
+    }
+
+    @GetMapping("/sAureusSpaType")
+    @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
+    public ResponseEntity<List<String>> getSAureusSpaType() {
+        return ResponseEntity.ok(sAureusSpaTypeService.findAll());
     }
 
     @GetMapping("/clermontTyping")

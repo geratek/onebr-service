@@ -181,6 +181,7 @@ public class BacteriaService {
             .source(sourceRes)
             .host(bacteria.getHost())
             .st(bacteria.getSt())
+            .sAureusSpaType(bacteria.getSAureusSpaType())
             .plamidomes(bacteria.getPlamidomes())
             .virulomes(bacteria.getVirulomes())
             .effluxPumps(bacteria.getEffluxPumps())
@@ -248,6 +249,7 @@ public class BacteriaService {
             .source(bacteriaReq.getSource())
             .host(bacteriaReq.getHost())
             .st(bacteriaReq.getSt())
+            .sAureusSpaType(bacteriaReq.getSAureusSpaType())
             .plamidomes(bacteriaReq.getPlamidomes())
             .virulomes(bacteriaReq.getVirulomes())
             .effluxPumps(bacteriaReq.getEffluxPumps())
@@ -318,6 +320,7 @@ public class BacteriaService {
             .ifPresent(y -> bacteria.setSource(sourceRepository.findById(y).get())));
         Optional.ofNullable(bacteriaReq.getHost()).ifPresent(x -> bacteria.setHost(x));
         Optional.ofNullable(bacteriaReq.getSt()).ifPresent(x -> bacteria.setSt(x));
+        Optional.ofNullable(bacteriaReq.getSAureusSpaType()).ifPresent(x -> bacteria.setSAureusSpaType(x));
         Optional.ofNullable(bacteriaReq.getPlamidomes())
             .ifPresent(x -> {
                 final List<Long> plasmidomeIds = x.stream().filter(y -> y.getId() != null).map(z -> z.getId()).collect(Collectors.toList());

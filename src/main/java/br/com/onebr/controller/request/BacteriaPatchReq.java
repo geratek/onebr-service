@@ -58,6 +58,8 @@ public class BacteriaPatchReq {
 
     private String st;
 
+    private String sAureusSpaType;
+
     private Set<Plasmidome> plamidomes;
 
     private Set<Virulome> virulomes;

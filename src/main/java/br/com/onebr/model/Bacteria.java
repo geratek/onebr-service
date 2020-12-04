@@ -84,6 +84,9 @@ public class Bacteria {
     @Column(name = "st")
     private String st;
 
+    @Column(name = "s_aureus_spa_type")
+    private String sAureusSpaType;
+
     @ManyToMany
     @JoinTable(name = "plasmidome_bacteria", joinColumns = @JoinColumn(name = "fk_bacteria"), inverseJoinColumns = @JoinColumn(name = "fk_plasmidome"))
     private Set<Plasmidome> plamidomes;

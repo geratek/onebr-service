@@ -1,0 +1,1 @@
+ALTER TABLE bacteria ADD COLUMN s_aureus_spa_type VARCHAR(45);
