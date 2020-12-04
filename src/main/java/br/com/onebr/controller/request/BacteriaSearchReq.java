@@ -29,6 +29,8 @@ public class BacteriaSearchReq extends PageRequest {
 
     private List<Integer> ids;
 
+    private List<Integer> subSpecieIds;
+
     public BacteriaSearchReq(Pageable pageable, Sort sort) {
         super(pageable.getPageNumber(), pageable.getPageSize(), sort);
     }
@@ -39,6 +41,10 @@ public class BacteriaSearchReq extends PageRequest {
 
     public void setResistomes(List<Integer> resistomes) {
         this.resistomes = resistomes != null ? resistomes : EMPTY_ARRAY;
+    }
+
+    public void setSubSpecieIds(List<Integer> subSpecieIds) {
+        this.subSpecieIds = subSpecieIds != null ? subSpecieIds : EMPTY_ARRAY;
     }
 
     public void setIds(List<Integer> ids) {

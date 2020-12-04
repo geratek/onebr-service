@@ -12,6 +12,7 @@ public interface BacteriaQueryResult {
 
     String PROJECTION = "SELECT "
         + "b.id as id, "
+        + "subSpecie.name as subSpecieName, "
         + "b.identification as identification, "
         + "c.name as cityName, "
         + "o.name_en as originNameEn, "
@@ -41,6 +42,7 @@ public interface BacteriaQueryResult {
         + "LEFT JOIN city c ON c.id = b.fk_city "
         + "LEFT JOIN origin o ON o.id = b.fk_origin "
         + "LEFT JOIN source s ON s.id = b.fk_source "
+        + "LEFT JOIN specie subSpecie ON subSpecie.id = b.fk_sub_specie "
         // resistome
         + "LEFT JOIN resistome r ON r.id = b.fk_resistome "
         + "LEFT JOIN b_lactam_resistome blr ON blr.fk_resistome = r.id "
@@ -107,13 +109,16 @@ public interface BacteriaQueryResult {
         + ") "
         + "AND (EXTRACT(YEAR FROM b.date) >= :yearStart OR :yearStart = 0) "
         + "AND (EXTRACT(YEAR FROM b.date) <= :yearEnd OR :yearEnd = 0) "
-        + "AND (b.id IN(:ids) OR :ids IS NULL) ";
+        + "AND (b.id IN(:ids) OR :ids IS NULL) "
+        + "AND (b.fk_sub_specie IN (:subSpecieIds) OR :subSpecieIds IS NULL) ";
 
-    String GROUP_BY = "GROUP BY b.id, b.identification, c.name, o.name_en, o.name_pt, s.name_en, s.name_pt, b.host, b.st";
+    String GROUP_BY = "GROUP BY b.id, subSpecie.name, b.identification, c.name, o.name_en, o.name_pt, s.name_en, s.name_pt, b.host, b.st";
 
     String QUERY = PROJECTION + FROM + WHERE + GROUP_BY;
 
     Long getId();
+
+    String getSubSpecieName();
 
     String getIdentification();
 

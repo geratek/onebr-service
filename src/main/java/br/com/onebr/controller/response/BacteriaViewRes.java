@@ -42,6 +42,9 @@ public class BacteriaViewRes {
     @JsonProperty("specie")
     private Specie specie;
 
+    @JsonProperty("sub_specie")
+    private Specie subSpecie;
+
     @JsonProperty("country")
     private CountryRes country;
 

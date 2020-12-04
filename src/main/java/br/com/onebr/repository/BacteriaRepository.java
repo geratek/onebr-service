@@ -24,6 +24,7 @@ public interface BacteriaRepository extends PagingAndSortingRepository<Bacteria,
         @Param("yearStart") int yearStart,
         @Param("yearEnd") int yearEnd,
         @Param("ids") List<Integer> ids,
+        @Param("subSpecieIds") List<Integer> subSpecieIds,
         Pageable pageable);
 
     @Query(value = BacteriaAdminQueryResult.QUERY, nativeQuery = true)

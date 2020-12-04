@@ -47,6 +47,9 @@ public class BacteriaPostReq {
     @NotNull
     private Specie specie;
 
+    @Valid
+    private Specie subSpecie;
+
     private Region region;
 
     private City city;

@@ -59,6 +59,7 @@ public class BacteriaController {
         @RequestParam(value = "yearStart", required = false) Integer yearStart,
         @RequestParam(value = "yearEnd", required = false) Integer yearEnd,
         @RequestParam(value = "ids", required = false) List<Integer> ids,
+        @RequestParam(value = "subSpecieIds", required = false) List<Integer> subSpecieIds,
         Pageable page) {
         Sort sort = translateSort(page.getSort());
         final BacteriaSearchReq bacteriaSearchReq = new BacteriaSearchReq(page, sort);
@@ -68,6 +69,7 @@ public class BacteriaController {
         bacteriaSearchReq.setResistomes(resistomes);
         bacteriaSearchReq.setDate(yearStart, yearEnd);
         bacteriaSearchReq.setIds(ids);
+        bacteriaSearchReq.setSubSpecieIds(subSpecieIds);
 
         return ResponseEntity.ok(bacteriaService.search(bacteriaSearchReq));
     }

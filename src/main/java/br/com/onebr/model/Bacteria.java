@@ -52,6 +52,10 @@ public class Bacteria {
     private Specie specie;
 
     @OneToOne
+    @JoinColumn(name = "fk_sub_specie")
+    private Specie subSpecie;
+
+    @OneToOne
     @JoinColumn(name = "fk_region")
     private Region region;
 

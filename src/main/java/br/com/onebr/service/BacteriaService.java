@@ -30,6 +30,7 @@ import br.com.onebr.repository.SCCMecElementRepository;
 import br.com.onebr.repository.SequencerRepository;
 import br.com.onebr.repository.SerovarRepository;
 import br.com.onebr.repository.SourceRepository;
+import br.com.onebr.repository.SpecieRepository;
 import br.com.onebr.repository.VirulomeRepository;
 import br.com.onebr.security.AuthenticationRes;
 import br.com.onebr.service.util.SecurityUtil;
@@ -61,6 +62,9 @@ public class BacteriaService {
 
     @Autowired
     private SpecieService specieService;
+
+    @Autowired
+    private SpecieRepository specieRepository;
 
     @Autowired
     private RegionRepository regionRepository;
@@ -114,6 +118,7 @@ public class BacteriaService {
             bacteriaSearchReq.getYearStart(),
             bacteriaSearchReq.getYearEnd(),
             bacteriaSearchReq.getIds(),
+            bacteriaSearchReq.getSubSpecieIds(),
             bacteriaSearchReq);
     }
 
@@ -171,6 +176,7 @@ public class BacteriaService {
             .identification(bacteria.getIdentification())
             .researcherName(bacteria.getResearcherName())
             .specie(bacteria.getSpecie())
+            .subSpecie(bacteria.getSubSpecie())
             .country(countryRes)
             .region(regionRes)
             .city(bacteria.getCity())
@@ -240,6 +246,7 @@ public class BacteriaService {
             .identification(bacteriaReq.getIdentification())
             .researcherName(bacteriaReq.getResearcherName())
             .specie(bacteriaReq.getSpecie())
+            .subSpecie(bacteriaReq.getSubSpecie())
             .region(bacteriaReq.getRegion())
             .city(bacteriaReq.getCity())
             .geolocationLat(bacteriaReq.getGeolocationLat())
@@ -306,6 +313,8 @@ public class BacteriaService {
             securityUtil.validateLoggedUserHasBacteriaAccess(specie.getId());
             bacteria.setSpecie(Specie.builder().id(specie.getId()).build());
         }
+        Optional.ofNullable(bacteriaReq.getSubSpecie())
+            .ifPresent(x -> Optional.ofNullable(x.getId()).ifPresent(y -> bacteria.setSubSpecie(specieRepository.findById(y).get())));
 
         Optional.ofNullable(bacteriaReq.getRegion())
             .ifPresent(x -> Optional.ofNullable(x.getId()).ifPresent(y -> bacteria.setRegion(regionRepository.findById(y).get())));

@@ -40,6 +40,8 @@ public class BacteriaPatchReq {
 
     private Specie specie;
 
+    private Specie subSpecie;
+
     private Region region;
 
     private City city;
