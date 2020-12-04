@@ -22,12 +22,20 @@ public class SpecieService {
     private SecurityUtil securityUtil;
 
     public List<Specie> findAllByLoggedUser() {
+        return findAllByLoggedUser(null);
+    }
+
+    public List<Specie> findAllByLoggedUser(Long specieGroupId) {
         final AuthenticationRes auth = securityUtil.getAuthentication();
         List<Specie> species;
-        if (auth.isAdmin()) {
-            species = specieRepository.findAllByOrderById();
+        if (specieGroupId != null) {
+            species = specieRepository.findAllByGroupIdOrderById(specieGroupId);
         } else {
-            species = specieRepository.findAllByUserIdOrderById(auth.getId());
+            if (auth.isAdmin()) {
+                species = specieRepository.findAllByOrderById();
+            } else {
+                species = specieRepository.findAllByUserIdOrderById(auth.getId());
+            }
         }
 
         if (CollectionUtils.isEmpty(species)) {

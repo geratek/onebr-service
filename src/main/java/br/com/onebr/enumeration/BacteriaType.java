@@ -8,7 +8,16 @@ public enum BacteriaType {
 
     EC_BR(1),
     KP_BR(2),
-    SE_BR(3);
+    SE_BR(3),
+    AB_BR(4),
+    CF_BR(5),
+    EF_BR(6),
+    KA_BR(7),
+    PA_BR(8),
+    SA_BR(9),
+    SP_BR(10),
+    SL_BR(11),
+    CV_19(12);
 
     long id;
 

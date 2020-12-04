@@ -89,8 +89,9 @@ public class BacteriaFilterController {
 
     @GetMapping("/specie")
     @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
-    public ResponseEntity<List<SpecieRes>> getSpecie() {
-        final List<Specie> species = specieService.findAllByLoggedUser();
+    public ResponseEntity<List<SpecieRes>> getSpecie(
+        @RequestParam(value = "groupId", required = false) Long groupId) {
+        final List<Specie> species = specieService.findAllByLoggedUser(groupId);
 
         return ResponseEntity.ok(species.stream().map(s -> SpecieRes.builder()
             .id(s.getId())
