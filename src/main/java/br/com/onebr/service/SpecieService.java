@@ -21,6 +21,22 @@ public class SpecieService {
     @Autowired
     private SecurityUtil securityUtil;
 
+    public List<Specie> findAllPublic(Long specieGroupId) {
+        List<Specie> species;
+        if (specieGroupId != null) {
+            species = specieRepository.findAllByGroupIdOrderById(specieGroupId);
+        } else {
+            species = specieRepository.findAllByOrderById();
+        }
+
+        if (CollectionUtils.isEmpty(species)) {
+            log.warn("message=No specie found on database.");
+            throw new NotFoundApiException("specie.not.found");
+        }
+
+        return species;
+    }
+
     public List<Specie> findAllByLoggedUser() {
         return findAllByLoggedUser(null);
     }

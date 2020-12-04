@@ -96,6 +96,19 @@ public class BacteriaFilterController {
     @Autowired
     private ResistomeService resistomeService;
 
+    @GetMapping("/public/specie")
+    public ResponseEntity<List<SpecieRes>> getPublicSpecie(
+        @RequestParam(value = "groupId", required = false) Long groupId) {
+        final List<Specie> species = specieService.findAllPublic(groupId);
+
+        return ResponseEntity.ok(species.stream().map(s -> SpecieRes.builder()
+            .id(s.getId())
+            .name(s.getName())
+            .type(BacteriaType.fromId(s.getId()))
+            .build()).collect(Collectors.toList())
+        );
+    }
+
     @GetMapping("/specie")
     @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
     public ResponseEntity<List<SpecieRes>> getSpecie(
