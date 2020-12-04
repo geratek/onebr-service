@@ -93,4 +93,35 @@ public class Antibiogram {
 
     @Column(name = "col")
     private String col;
+
+    // COVID
+    @Column(name = "tob")
+    private String tob;
+
+    @Column(name = "pit")
+    private String pit;
+
+    @Column(name = "tig")
+    private String tig;
+
+    @Column(name = "lzd")
+    private String lzd;
+
+    @Column(name = "azi")
+    private String azi;
+
+    @Column(name = "lxv")
+    private String lxv;
+
+    @Column(name = "cli")
+    private String cli;
+
+    @Column(name = "pen")
+    private String pen;
+
+    @Column(name = "mup")
+    private String mup;
+
+    @Column(name = "van")
+    private String van;
 }

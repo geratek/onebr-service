@@ -1,0 +1,10 @@
+alter table antibiogram add column tob varchar(1);
+alter table antibiogram add column pit varchar(1);
+alter table antibiogram add column tig varchar(1);
+alter table antibiogram add column lzd varchar(1);
+alter table antibiogram add column azi varchar(1);
+alter table antibiogram add column lxv varchar(1);
+alter table antibiogram add column cli varchar(1);
+alter table antibiogram add column pen varchar(1);
+alter table antibiogram add column mup varchar(1);
+alter table antibiogram add column van varchar(1);
