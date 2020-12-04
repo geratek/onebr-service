@@ -25,6 +25,7 @@ import br.com.onebr.repository.HeavyMetalRepository;
 import br.com.onebr.repository.OriginRepository;
 import br.com.onebr.repository.PlasmidomeRepository;
 import br.com.onebr.repository.RegionRepository;
+import br.com.onebr.repository.SCCMecElementRepository;
 import br.com.onebr.repository.SequencerRepository;
 import br.com.onebr.repository.SerovarRepository;
 import br.com.onebr.repository.SourceRepository;
@@ -95,6 +96,9 @@ public class BacteriaService {
 
     @Autowired
     private SequencerRepository sequencerRepository;
+
+    @Autowired
+    private SCCMecElementRepository sccMecElementRepository;
 
     @Autowired
     private SecurityUtil securityUtil;
@@ -186,6 +190,7 @@ public class BacteriaService {
             .heavyMetal(bacteria.getHeavyMetal())
             .antibiogram(bacteria.getAntibiogram())
             .sequencer(bacteria.getSequencer())
+            .sccMecElement(bacteria.getSccMecElement())
             .sequencingDate(bacteria.getSequencingDate())
             .assembler(bacteria.getAssembler())
             .dateOfAssembly(bacteria.getDateOfAssembly())
@@ -251,6 +256,7 @@ public class BacteriaService {
             .heavyMetal(bacteriaReq.getHeavyMetal())
             .antibiogram(bacteriaReq.getAntibiogram())
             .sequencer(bacteriaReq.getSequencer())
+            .sccMecElement(bacteriaReq.getSccMecElement())
             .sequencingDate(bacteriaReq.getSequencingDate())
             .assembler(bacteriaReq.getAssembler())
             .dateOfAssembly(bacteriaReq.getDateOfAssembly())
@@ -387,9 +393,22 @@ public class BacteriaService {
             Optional.ofNullable(antibiogramReq.getAmp()).ifPresentOrElse(x -> antibiogram.setAmp(x), () -> antibiogram.setAmp(null));
             Optional.ofNullable(antibiogramReq.getTet()).ifPresentOrElse(x -> antibiogram.setTet(x), () -> antibiogram.setTet(null));
             Optional.ofNullable(antibiogramReq.getCol()).ifPresentOrElse(x -> antibiogram.setCol(x), () -> antibiogram.setCol(null));
+
+            Optional.ofNullable(antibiogramReq.getTob()).ifPresentOrElse(x -> antibiogram.setTob(x), () -> antibiogram.setTob(null));
+            Optional.ofNullable(antibiogramReq.getPit()).ifPresentOrElse(x -> antibiogram.setPit(x), () -> antibiogram.setPit(null));
+            Optional.ofNullable(antibiogramReq.getTig()).ifPresentOrElse(x -> antibiogram.setTig(x), () -> antibiogram.setTig(null));
+            Optional.ofNullable(antibiogramReq.getLzd()).ifPresentOrElse(x -> antibiogram.setLzd(x), () -> antibiogram.setLzd(null));
+            Optional.ofNullable(antibiogramReq.getAzi()).ifPresentOrElse(x -> antibiogram.setAzi(x), () -> antibiogram.setAzi(null));
+            Optional.ofNullable(antibiogramReq.getLxv()).ifPresentOrElse(x -> antibiogram.setLxv(x), () -> antibiogram.setLxv(null));
+            Optional.ofNullable(antibiogramReq.getCli()).ifPresentOrElse(x -> antibiogram.setCli(x), () -> antibiogram.setCli(null));
+            Optional.ofNullable(antibiogramReq.getPen()).ifPresentOrElse(x -> antibiogram.setPen(x), () -> antibiogram.setPen(null));
+            Optional.ofNullable(antibiogramReq.getMup()).ifPresentOrElse(x -> antibiogram.setMup(x), () -> antibiogram.setMup(null));
+            Optional.ofNullable(antibiogramReq.getVan()).ifPresentOrElse(x -> antibiogram.setVan(x), () -> antibiogram.setVan(null));
         }
         Optional.ofNullable(bacteriaReq.getSequencer()).ifPresent(x -> Optional.ofNullable(x.getId())
             .ifPresent(y -> bacteria.setSequencer(sequencerRepository.findById(y).get())));
+        Optional.ofNullable(bacteriaReq.getSccMecElement()).ifPresent(x -> Optional.ofNullable(x.getId())
+            .ifPresent(y -> bacteria.setSccMecElement(sccMecElementRepository.findById(y).get())));
         Optional.ofNullable(bacteriaReq.getSequencingDate()).ifPresent(x -> bacteria.setSequencingDate(x));
         Optional.ofNullable(bacteriaReq.getAssembler()).ifPresent(x -> bacteria.setAssembler(x));
         Optional.ofNullable(bacteriaReq.getDateOfAssembly()).ifPresent(x -> bacteria.setDateOfAssembly(x));

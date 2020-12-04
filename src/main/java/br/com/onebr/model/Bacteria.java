@@ -132,6 +132,10 @@ public class Bacteria {
     @JoinColumn(name = "fk_sequencer")
     private Sequencer sequencer;
 
+    @OneToOne
+    @JoinColumn(name = "fk_scc_mec_element")
+    private SCCMecElement sccMecElement;
+
     @Column(name = "sequencing_date", columnDefinition = "date")
     private Date sequencingDate;
 

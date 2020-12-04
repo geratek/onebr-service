@@ -7,6 +7,7 @@ import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Origin;
 import br.com.onebr.model.Plasmidome;
 import br.com.onebr.model.Region;
+import br.com.onebr.model.SCCMecElement;
 import br.com.onebr.model.Sequencer;
 import br.com.onebr.model.Serotype;
 import br.com.onebr.model.Serovar;
@@ -81,6 +82,8 @@ public class BacteriaPatchReq {
     private Antibiogram antibiogram;
 
     private Sequencer sequencer;
+
+    private SCCMecElement sccMecElement;
 
     private Date sequencingDate;
 

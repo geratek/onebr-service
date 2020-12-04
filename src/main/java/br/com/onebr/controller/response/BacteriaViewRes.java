@@ -5,6 +5,7 @@ import br.com.onebr.model.City;
 import br.com.onebr.model.ClermontTyping;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Plasmidome;
+import br.com.onebr.model.SCCMecElement;
 import br.com.onebr.model.Sequencer;
 import br.com.onebr.model.Serotype;
 import br.com.onebr.model.Serovar;
@@ -108,6 +109,9 @@ public class BacteriaViewRes {
 
     @JsonProperty("sequencer")
     private Sequencer sequencer;
+
+    @JsonProperty("scc_mec_element")
+    private SCCMecElement sccMecElement;
 
     @JsonProperty("sequencing_date")
     private Date sequencingDate;

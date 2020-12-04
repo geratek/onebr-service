@@ -11,6 +11,7 @@ import br.com.onebr.model.AntigenO;
 import br.com.onebr.model.ClermontTyping;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Plasmidome;
+import br.com.onebr.model.SCCMecElement;
 import br.com.onebr.model.Sequencer;
 import br.com.onebr.model.Serovar;
 import br.com.onebr.model.Specie;
@@ -21,6 +22,7 @@ import br.com.onebr.service.HeavyMetalService;
 import br.com.onebr.service.OriginService;
 import br.com.onebr.service.PlasmidomeService;
 import br.com.onebr.service.ResistomeService;
+import br.com.onebr.service.SCCMecElementService;
 import br.com.onebr.service.SequencerService;
 import br.com.onebr.service.SerotypeService;
 import br.com.onebr.service.SerovarService;
@@ -72,6 +74,9 @@ public class BacteriaFilterController {
 
     @Autowired
     private SequencerService sequencerService;
+
+    @Autowired
+    private SCCMecElementService sccMecElementService;
 
     @Autowired
     private VirulomeService virulomeService;
@@ -163,6 +168,14 @@ public class BacteriaFilterController {
         final List<Sequencer> sequencers = sequencerService.findAll();
 
         return ResponseEntity.ok(sequencers);
+    }
+
+    @GetMapping("/sccMecElement")
+    @PreAuthorize("hasAnyAuthority('" + ROLE.ADMIN + "','" + ROLE.USER + "')")
+    public ResponseEntity<List<SCCMecElement>> getSccMecElement() {
+        final List<SCCMecElement> sccMecElements = sccMecElementService.findAll();
+
+        return ResponseEntity.ok(sccMecElements);
     }
 
     @GetMapping("/virulome")
