@@ -24,6 +24,8 @@ public class SAureusSpaTypeService {
         final ArrayList<String> sAureusSpaTypes = new ArrayList<>();
         IntStream.range(MIN, MAX).forEach(i -> sAureusSpaTypes.add(String.format(PREFIX, i)));
 
+        sAureusSpaTypes.add("NA");
+
         return sAureusSpaTypes;
     }
 }
