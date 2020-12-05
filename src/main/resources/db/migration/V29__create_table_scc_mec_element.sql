@@ -9,3 +9,5 @@ ALTER TABLE scc_mec_element ALTER COLUMN id SET DEFAULT nextval('seq_scc_mec_ele
 
 ALTER TABLE bacteria ADD COLUMN fk_scc_mec_element BIGINT;
 ALTER TABLE bacteria ADD CONSTRAINT fk_bacteria_scc_mec_element FOREIGN KEY (fk_scc_mec_element) REFERENCES scc_mec_element (id);
+
+CREATE UNIQUE INDEX scc_mec_element_name_idx ON scc_mec_element ("name");

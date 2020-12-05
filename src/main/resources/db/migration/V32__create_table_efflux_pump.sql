@@ -7,6 +7,8 @@ WITH (oids = false);
 CREATE SEQUENCE seq_efflux_pump;
 ALTER TABLE efflux_pump ALTER COLUMN id SET DEFAULT nextval('seq_efflux_pump');
 
+CREATE UNIQUE INDEX efflux_pump_name_idx ON efflux_pump ("name");
+
 CREATE TABLE efflux_pump_bacteria (
   fk_bacteria BIGINT NOT NULL,
   fk_efflux_pump BIGINT NOT NULL,
