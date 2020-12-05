@@ -25,8 +25,9 @@ public class ImporterController {
     @PostMapping
     @PreAuthorize("hasAuthority('" + ROLE.ADMIN + "')")
     @ApiIgnore
-    public ResponseEntity importCsvBacteria(@RequestParam("file") MultipartFile file) throws IOException, ParseException {
-        bacteriaImporterService.importBacteriaCsv(file);
+    public ResponseEntity importCsvBacteria(@RequestParam("file") MultipartFile file, @RequestParam("isCovid19") boolean isCovid19)
+        throws IOException, ParseException {
+        bacteriaImporterService.importBacteriaCsv(file, isCovid19);
 
         return ResponseEntity.ok().build();
     }

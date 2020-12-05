@@ -1,13 +1,16 @@
 package br.com.onebr.service.importer;
 
+import br.com.onebr.enumeration.BacteriaType;
 import br.com.onebr.model.Antibiogram;
 import br.com.onebr.model.Bacteria;
 import br.com.onebr.model.City;
 import br.com.onebr.model.ClermontTyping;
+import br.com.onebr.model.EffluxPump;
 import br.com.onebr.model.HeavyMetal;
 import br.com.onebr.model.Origin;
 import br.com.onebr.model.Plasmidome;
 import br.com.onebr.model.Region;
+import br.com.onebr.model.SCCMecElement;
 import br.com.onebr.model.Sequencer;
 import br.com.onebr.model.Serotype;
 import br.com.onebr.model.Serovar;
@@ -19,10 +22,12 @@ import br.com.onebr.repository.AntigenORepository;
 import br.com.onebr.repository.BacteriaRepository;
 import br.com.onebr.repository.CityRepository;
 import br.com.onebr.repository.ClermontTypingRepository;
+import br.com.onebr.repository.EffluxPumpRepository;
 import br.com.onebr.repository.HeavyMetalRepository;
 import br.com.onebr.repository.OriginRepository;
 import br.com.onebr.repository.PlasmidomeRepository;
 import br.com.onebr.repository.RegionRepository;
+import br.com.onebr.repository.SCCMecElementRepository;
 import br.com.onebr.repository.SequencerRepository;
 import br.com.onebr.repository.SerovarRepository;
 import br.com.onebr.repository.SourceRepository;
@@ -93,6 +98,10 @@ public class BacteriaImporterService {
     private final Map<String, Serovar> serovarMap = new HashMap<>();
 
     @Autowired
+    private SCCMecElementRepository sccMecElementRepository;
+    private final Map<String, SCCMecElement> sccMecElementMap = new HashMap<>();
+
+    @Autowired
     private SequencerRepository sequencerRepository;
     private final Map<String, Sequencer> sequencerMap = new HashMap<>();
 
@@ -112,9 +121,12 @@ public class BacteriaImporterService {
     private VirulomeRepository virulomeRepository;
 
     @Autowired
+    private EffluxPumpRepository effluxPumpRepository;
+
+    @Autowired
     private ResistomeImporterService resistomeImporterService;
 
-    public void importBacteriaCsv(MultipartFile multipartFile) throws IOException, ParseException {
+    public void importBacteriaCsv(MultipartFile multipartFile, boolean isCovid19) throws IOException, ParseException {
         bacterias.clear();
         final String completeData = new String(multipartFile.getBytes(), "UTF-8");
         final String[] rows = completeData.split("\n");
@@ -187,6 +199,15 @@ public class BacteriaImporterService {
             final String[] serotype = csv[++pos].split(":");
             final boolean isEmptySerotype = NULL_STRING.equals(csv[pos].trim());
             String serovar = csv[++pos].trim();
+            String sccMecElement = null;
+            String sAureusSpaType = null;
+            String[] effluxPumps = null;
+            if (isCovid19) {
+                sccMecElement = csv[++pos].trim();
+                sAureusSpaType = csv[++pos].trim();
+                effluxPumps = csv[++pos].split(",");
+            }
+
             String[] heavyMetals = csv[++pos].split(",");
             String accessNoGb = csv[++pos].trim();
             String paperPublished = csv[++pos].trim();
@@ -212,10 +233,36 @@ public class BacteriaImporterService {
             String antiCTF = csv[++pos].trim();
             String antiAMP = csv[++pos].trim();
             String antiTET = csv[++pos].trim();
+            String antiTOB = null;
+            String antiPIT = null;
+            String antiTIG = null;
+            String antiLZD = null;
+            String antiAZI = null;
+            String antiLXV = null;
+            String antiCLI = null;
+            String antiPEN = null;
+            String antiMUP = null;
+            String antiVAN = null;
+            if (isCovid19) {
+                antiTOB = csv[++pos].trim();
+                antiPIT = csv[++pos].trim();
+                antiTIG = csv[++pos].trim();
+                antiLZD = csv[++pos].trim();
+                antiAZI = csv[++pos].trim();
+                antiLXV = csv[++pos].trim();
+                antiCLI = csv[++pos].trim();
+                antiPEN = csv[++pos].trim();
+                antiMUP = csv[++pos].trim();
+                antiVAN = csv[++pos].trim();
+            }
+
             String antiCOL = csv[++pos].trim();
             Antibiogram antibiogram = Antibiogram.builder().mer(antiMER).etp(antiETP).ipm(antiIPM).cro(antiCRO).caz(antiCAZ).cfx(antiCFX).cpm(antiCPM)
                 .ctx(antiCTX).nal(antiNAL).cip(antiCIP).amc(antiAMC).atm(antiATM).ami(antiAMI).gen(antiGEN).sxt(antiSXT).eno(antiENO).chl(antiCHL)
-                .fos(antiFOS).cep(antiCEP).ctf(antiCTF).amp(antiAMP).tet(antiTET).col(antiCOL).build();
+                .fos(antiFOS).cep(antiCEP).ctf(antiCTF).amp(antiAMP).tet(antiTET)
+                // covid19
+                .tob(antiTOB).pit(antiPIT).tig(antiTIG).lzd(antiLZD).azi(antiAZI).lxv(antiLXV).cli(antiCLI).pen(antiPEN).mup(antiMUP).van(antiVAN)
+                .col(antiCOL).build();
 
             String sequencer = csv[++pos].trim();
             final String[] sequencingDate = csv[++pos].split(",");
@@ -237,7 +284,6 @@ public class BacteriaImporterService {
             }
 
             final Bacteria bacteria = Bacteria.builder().barcode(barCode).identification(identification).researcherName(researcher)
-                .specie(findSpecie(specie))
                 .region(NULL_STRING.equals(region) ? null : findRegion(region))
                 .city(NULL_STRING.equals(city) ? null : findCity(city))
                 .origin(NULL_STRING.equals(origin) ? null : findOrigin(origin))
@@ -260,6 +306,21 @@ public class BacteriaImporterService {
                 .dateOfAssembly(isEmptyDateOfAssembly ? null : convertToDate(dateOfAssemblyYear, dateOfAssemblyMonth, "Date of assembly"))
                 .validMonth(dateMonth != null)
                 .build();
+
+            if (isCovid19) {
+                bacteria.setSccMecElement(findSCCMecElement(sccMecElement));
+                bacteria.setSAureusSpaType(sAureusSpaType);
+                bacteria.setEffluxPumps(findAndSaveEffluxPumps(effluxPumps));
+            }
+
+            final Specie specieDB = findSpecie(specie, isCovid19 ? BacteriaType.CV_19 : null);
+            if (specieDB != null && specieDB.getId() != null && isCovid19) {
+                final Specie specieGroup = specieRepository.getSpecieGroup(specieDB.getId());
+                bacteria.setSpecie(specieGroup);
+                bacteria.setSubSpecie(specieDB);
+            } else {
+                bacteria.setSpecie(specieDB);
+            }
 
             if (pos == csv.length - 1) {
                 System.out.println("index: " + i + " continuing " + barCode);
@@ -288,12 +349,13 @@ public class BacteriaImporterService {
         final Set<Plasmidome> plasmidomesDB = new HashSet<>();
 
         plasmidomesDB.addAll(plasmidomeRepository.findByNameIn(
-            Arrays.stream(plasmidomes).filter(p -> !StringUtils.isEmpty(p)).map(p -> p.trim()).collect(Collectors.toList())));
+            Arrays.stream(plasmidomes).filter(p -> !StringUtils.isEmpty(p)).filter(p -> p.trim().length() > 1).map(p -> p.trim())
+                .collect(Collectors.toList())));
 
         if (plasmidomes.length != plasmidomesDB.size()) {
             final List<String> collect = plasmidomesDB.stream().map(p -> p.getName().trim()).collect(Collectors.toList());
             for (String p : plasmidomes) {
-                if (!collect.contains(p.trim())) {
+                if (!collect.contains(p.trim()) && p.trim().length() > 1) {
                     importerStats.addError(Plasmidome.class.getSimpleName(), p.trim());
                 }
             }
@@ -320,10 +382,35 @@ public class BacteriaImporterService {
         return virulomesDB;
     }
 
-    private Specie findSpecie(String name) {
+    private Set<EffluxPump> findAndSaveEffluxPumps(String[] effluxPumps) {
+        final Set<EffluxPump> effluxPumpsDB = new HashSet<>();
+
+        effluxPumpsDB.addAll(effluxPumpRepository.findByNameIn(
+            Arrays.stream(effluxPumps).filter(v -> !StringUtils.isEmpty(v)).filter(v -> v.length() > 1).map(v -> v.trim())
+                .collect(Collectors.toList())));
+
+        if (effluxPumps.length != effluxPumpsDB.size()) {
+            final List<String> collect = effluxPumpsDB.stream().map(v -> v.getName().trim()).collect(Collectors.toList());
+            for (String v : effluxPumps) {
+                if (!collect.contains(v.trim()) && v.trim().length() > 1) {
+                    importerStats.addError(EffluxPump.class.getSimpleName(), v.trim());
+                }
+            }
+        }
+
+        return effluxPumpsDB;
+    }
+
+    private Specie findSpecie(String name, BacteriaType bacteriaType) {
         final Specie specie = specieMap.get(name);
         if (specie == null) {
-            final Specie specieDB = specieRepository.findByName(name);
+            Specie specieDB;
+            if (bacteriaType != null) {
+                specieDB = specieRepository.findByNameAndSpecieGroupId(name, bacteriaType.getId());
+            } else {
+                specieDB = specieRepository.findByName(name);
+            }
+
             if (specieDB == null) {
                 importerStats.addError(Specie.class.getSimpleName(), name);
             }
@@ -373,6 +460,10 @@ public class BacteriaImporterService {
     }
 
     private Source findSource(String name) {
+        if (StringUtils.isEmpty(name) || name.trim().length() <= 1) {
+            return null;
+        }
+
         final Source source = sourceMap.get(name);
         if (source == null) {
             final Source sourceDB = sourceRepository.findByName(name);
@@ -411,16 +502,30 @@ public class BacteriaImporterService {
         return serovar;
     }
 
+    private SCCMecElement findSCCMecElement(String name) {
+        final SCCMecElement sccMecElement = sccMecElementMap.get(name);
+        if (sccMecElement == null) {
+            final SCCMecElement sccMecElementDB = sccMecElementRepository.findByName(name);
+            if (sccMecElementDB == null) {
+                importerStats.addError(SCCMecElement.class.getSimpleName(), name);
+            }
+            sccMecElementMap.put(name, sccMecElementDB);
+            return sccMecElementDB;
+        }
+        return sccMecElement;
+    }
+
     private Set<HeavyMetal> findheavyMetals(String[] heavyMetals) {
         final Set<HeavyMetal> heavyMetalsDB = new HashSet<>();
 
         heavyMetalsDB.addAll(heavyMetalRepository.findByNameIn(
-            Arrays.stream(heavyMetals).filter(hm -> !StringUtils.isEmpty(hm)).map(hm -> hm.trim()).collect(Collectors.toList())));
+            Arrays.stream(heavyMetals).filter(hm -> !StringUtils.isEmpty(hm)).filter(hm -> hm.length() > 1).map(hm -> hm.trim())
+                .collect(Collectors.toList())));
 
         if (heavyMetals.length != heavyMetalsDB.size()) {
             final List<String> collect = heavyMetalsDB.stream().map(hm -> hm.getName().trim()).collect(Collectors.toList());
             for (String hm : heavyMetals) {
-                if (!collect.contains(hm.trim())) {
+                if (!collect.contains(hm.trim()) && hm.trim().length() > 1) {
                     importerStats.addError(HeavyMetal.class.getSimpleName(), hm.trim());
                 }
             }

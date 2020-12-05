@@ -6,3 +6,5 @@ INSERT INTO specie(name) VALUES('Pseudomonas aeruginosa');
 INSERT INTO specie(name) VALUES('Staphylococcus aureus');
 INSERT INTO specie(name) VALUES('Staphylococcus epidermidis');
 INSERT INTO specie(name) VALUES('Staphylococcus lugdunensis');
+INSERT INTO specie(name) VALUES('Klebsiella oxytoca');
+INSERT INTO specie(name) VALUES('Bactérias-COVID19');
