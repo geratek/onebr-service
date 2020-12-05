@@ -5,6 +5,7 @@ import br.com.onebr.model.Specie;
 import br.com.onebr.repository.SpecieRepository;
 import br.com.onebr.security.AuthenticationRes;
 import br.com.onebr.service.util.SecurityUtil;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class SpecieService {
         List<Specie> species;
         if (specieGroupId != null) {
             species = specieRepository.findAllByGroupIdOrderById(specieGroupId);
+            if (CollectionUtils.isEmpty(species)) {
+                return new ArrayList<>();
+            }
         } else {
             if (auth.isAdmin()) {
                 species = specieRepository.findAllByOrderById();
