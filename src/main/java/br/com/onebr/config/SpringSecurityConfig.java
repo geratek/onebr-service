@@ -77,6 +77,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/bacteria/filter/**").permitAll()
             .antMatchers(HttpMethod.POST, "/mail").permitAll()
             .antMatchers(HttpMethod.GET, "/image/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/analytics/**").permitAll()
             .antMatchers(SWAGGER_PATHS).permitAll()
             .anyRequest().authenticated();
 
