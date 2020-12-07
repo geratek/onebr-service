@@ -368,12 +368,13 @@ public class BacteriaImporterService {
         final Set<Virulome> virulomesDB = new HashSet<>();
 
         virulomesDB.addAll(virulomeRepository.findByNameIn(
-            Arrays.stream(virulomes).filter(v -> !StringUtils.isEmpty(v)).map(v -> v.trim()).collect(Collectors.toList())));
+            Arrays.stream(virulomes).filter(v -> !StringUtils.isEmpty(v)).filter(v -> v.length() > 1).map(v -> v.trim())
+                .collect(Collectors.toList())));
 
         if (virulomes.length != virulomesDB.size()) {
             final List<String> collect = virulomesDB.stream().map(v -> v.getName().trim()).collect(Collectors.toList());
             for (String v : virulomes) {
-                if (!collect.contains(v.trim())) {
+                if (!collect.contains(v.trim()) && v.trim().length() > 1) {
                     importerStats.addError(Virulome.class.getSimpleName(), v.trim());
                 }
             }

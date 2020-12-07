@@ -1,0 +1,1 @@
+insert into efflux_pump(name) values('mexW');
