@@ -118,7 +118,6 @@ insert into virulome(name) values('bap');
 insert into virulome(name) values('ugd');
 insert into virulome(name) values('flhF');
 insert into virulome(name) values('rcsB');
-insert into virulome(name) values('yfcV');
 insert into virulome(name) values('fha1');
 insert into virulome(name) values('scn');
 insert into virulome(name) values('glf');
