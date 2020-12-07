@@ -12,6 +12,7 @@ public enum Scope {
     CONTRIBUTOR(false),
     PUBLICATION(false),
     CONTACT(false),
+    PERSPECTIVE(false),
     RESTRICTED_DASHBOARD(true),
     RESTRICTED_EXPERIMENT(true),
     RESTRICTED_PUBLICATION(true),
