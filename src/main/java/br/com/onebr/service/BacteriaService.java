@@ -13,6 +13,7 @@ import br.com.onebr.exception.ForbiddenApiException;
 import br.com.onebr.exception.NotFoundApiException;
 import br.com.onebr.model.Antibiogram;
 import br.com.onebr.model.Bacteria;
+import br.com.onebr.model.Serotype;
 import br.com.onebr.model.Specie;
 import br.com.onebr.model.query.BacteriaAdminQueryResult;
 import br.com.onebr.model.query.BacteriaQueryResult;
@@ -375,7 +376,12 @@ public class BacteriaService {
         Optional.ofNullable(bacteriaReq.getFimType()).ifPresent(x -> bacteria.setFimType(x));
         Optional.ofNullable(bacteriaReq.getClermontTyping()).ifPresent(x -> Optional.ofNullable(x.getId())
             .ifPresent(y -> bacteria.setClermontTyping(clermontTypingRepository.findById(y).get())));
+
         Optional.ofNullable(bacteriaReq.getSerotype()).ifPresent(x -> {
+            if (bacteria.getSerotype() == null && (x.getAntigenH() != null || x.getAntigenO() != null)) {
+                bacteria.setSerotype(Serotype.builder().build());
+            }
+
             Optional.ofNullable(x.getAntigenO()).ifPresent(y -> Optional.ofNullable(y.getId()).ifPresent(z -> bacteria.getSerotype().setAntigenO(
                 antigenORepository.findById(z).get())));
             Optional.ofNullable(x.getAntigenH()).ifPresent(y -> Optional.ofNullable(y.getId()).ifPresent(z -> bacteria.getSerotype().setAntigenH(
