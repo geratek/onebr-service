@@ -91,9 +91,6 @@ public class Antibiogram {
     @Column(name = "tet")
     private String tet;
 
-    @Column(name = "col")
-    private String col;
-
     // COVID
     @Column(name = "tob")
     private String tob;
@@ -124,4 +121,7 @@ public class Antibiogram {
 
     @Column(name = "van")
     private String van;
+
+    @Column(name = "col")
+    private String col;
 }
