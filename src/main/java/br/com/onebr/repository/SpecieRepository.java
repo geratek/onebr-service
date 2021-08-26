@@ -21,11 +21,11 @@ public interface SpecieRepository extends JpaRepository<Specie, Long> {
     @Query(value = "SELECT sg.* FROM specie s INNER JOIN specie sg ON sg.id = s.fk_specie_group WHERE s.id = :specieId", nativeQuery = true)
     Specie getSpecieGroup(@Param("specieId") Long specieId);
 
-    @Query(value = "SELECT s.* FROM specie s WHERE s.fk_specie_group IS NULL ORDER BY s.id", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM specie s ORDER BY s.id", nativeQuery = true)
     List<Specie> findAllByOrderById();
 
     @Query(value = "SELECT s.* FROM specie s INNER JOIN user_specie us ON us.fk_specie = s.id "
-        + "WHERE us.fk_user = :userId AND s.fk_specie_group IS NULL "
+        + "WHERE us.fk_user = :userId "
         + "ORDER BY s.id", nativeQuery = true)
     List<Specie> findAllByUserIdOrderById(@Param("userId") Long userId);
 

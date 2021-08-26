@@ -57,7 +57,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class BacteriaImporterService {
 
-    private static final String SEPERATOR = ";";
+    private static final String SEPARATOR = ";";
 
     private static final String NULL_STRING = "-";
 
@@ -134,7 +134,7 @@ public class BacteriaImporterService {
         importerStats.setSheetName(multipartFile.getName());
         for (int i = 2; i < rows.length; i++) {
             importerStats.setCurrentLine(i + 1);
-            final String[] csv = rows[i].split(SEPERATOR);
+            final String[] csv = rows[i].split(SEPARATOR);
             int pos = 0;
             String barCode = csv[pos].trim();
             String identification = csv[++pos].trim();
@@ -199,14 +199,9 @@ public class BacteriaImporterService {
             final String[] serotype = csv[++pos].split(":");
             final boolean isEmptySerotype = NULL_STRING.equals(csv[pos].trim());
             String serovar = csv[++pos].trim();
-            String sccMecElement = null;
-            String sAureusSpaType = null;
-            String[] effluxPumps = null;
-            if (isCovid19) {
-                sccMecElement = csv[++pos].trim();
-                sAureusSpaType = csv[++pos].trim();
-                effluxPumps = csv[++pos].split(",");
-            }
+            String sccMecElement = csv[++pos].trim();
+            String sAureusSpaType = csv[++pos].trim();
+            String[] effluxPumps = csv[++pos].split(",");
 
             String[] heavyMetals = csv[++pos].split(",");
             String accessNoGb = csv[++pos].trim();
@@ -233,30 +228,18 @@ public class BacteriaImporterService {
             String antiCTF = csv[++pos].trim();
             String antiAMP = csv[++pos].trim();
             String antiTET = csv[++pos].trim();
-            String antiTOB = null;
-            String antiPIT = null;
-            String antiTIG = null;
-            String antiLZD = null;
-            String antiAZI = null;
-            String antiLXV = null;
-            String antiCLI = null;
-            String antiPEN = null;
-            String antiMUP = null;
-            String antiVAN = null;
-            if (isCovid19) {
-                antiTOB = csv[++pos].trim();
-                antiPIT = csv[++pos].trim();
-                antiTIG = csv[++pos].trim();
-                antiLZD = csv[++pos].trim();
-                antiAZI = csv[++pos].trim();
-                antiLXV = csv[++pos].trim();
-                antiCLI = csv[++pos].trim();
-                antiPEN = csv[++pos].trim();
-                antiMUP = csv[++pos].trim();
-                antiVAN = csv[++pos].trim();
-            }
-
+            String antiTOB = csv[++pos].trim();
+            String antiPIT = csv[++pos].trim();
+            String antiTIG = csv[++pos].trim();
+            String antiLZD = csv[++pos].trim();
+            String antiAZI = csv[++pos].trim();
+            String antiLXV = csv[++pos].trim();
+            String antiCLI = csv[++pos].trim();
+            String antiPEN = csv[++pos].trim();
+            String antiMUP = csv[++pos].trim();
+            String antiVAN = csv[++pos].trim();
             String antiCOL = csv[++pos].trim();
+
             Antibiogram antibiogram = Antibiogram.builder().mer(antiMER).etp(antiETP).ipm(antiIPM).cro(antiCRO).caz(antiCAZ).cfx(antiCFX).cpm(antiCPM)
                 .ctx(antiCTX).nal(antiNAL).cip(antiCIP).amc(antiAMC).atm(antiATM).ami(antiAMI).gen(antiGEN).sxt(antiSXT).eno(antiENO).chl(antiCHL)
                 .fos(antiFOS).cep(antiCEP).ctf(antiCTF).amp(antiAMP).tet(antiTET)
@@ -307,11 +290,9 @@ public class BacteriaImporterService {
                 .validMonth(dateMonth != null)
                 .build();
 
-            if (isCovid19) {
-                bacteria.setSccMecElement(findSCCMecElement(sccMecElement));
-                bacteria.setSAureusSpaType(sAureusSpaType);
-                bacteria.setEffluxPumps(findAndSaveEffluxPumps(effluxPumps));
-            }
+            bacteria.setSccMecElement(findSCCMecElement(sccMecElement));
+            bacteria.setSAureusSpaType(sAureusSpaType);
+            bacteria.setEffluxPumps(findAndSaveEffluxPumps(effluxPumps));
 
             final Specie specieDB = findSpecie(specie, isCovid19 ? BacteriaType.CV_19 : null);
             if (specieDB != null && specieDB.getId() != null && isCovid19) {
