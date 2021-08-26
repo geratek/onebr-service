@@ -76,7 +76,12 @@ public interface BacteriaQueryResult {
         + "LEFT JOIN oxazolidinone_resistome oxr ON oxr.fk_resistome = r.id "
         + "LEFT JOIN oxazolidinone oxa ON oxa.id = oxr.fk_oxazolidinone ";
 
-    String WHERE = "WHERE b.fk_specie =:specie "
+    String WHERE = "WHERE "
+        + "("
+        + "   b.fk_specie =:specie "
+        + "   OR"
+        + "   b.fk_sub_specie =:specie"
+        + ")"
         + "AND "
         + "((:searchTerm IS NOT NULL "
         + "   AND ( "
