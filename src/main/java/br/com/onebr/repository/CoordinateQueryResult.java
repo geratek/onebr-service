@@ -7,7 +7,8 @@ public interface CoordinateQueryResult {
         + "geo_location_lat as latitude, "
         + "geo_location_long as longitude "
         + "FROM bacteria "
-        + "WHERE fk_specie =:specieId "
+        + "WHERE (fk_specie =:specieId "
+        + "OR fk_sub_specie =:specieId) "
         + "AND geo_location_lat IS NOT NULL "
         + "AND geo_location_long IS NOT NULL";
 
