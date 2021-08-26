@@ -201,7 +201,6 @@ public class BacteriaImporterService {
             String serovar = csv[++pos].trim();
             String sccMecElement = csv[++pos].trim();
             String sAureusSpaType = csv[++pos].trim();
-            ;
             String[] effluxPumps = csv[++pos].split(",");
 
             String[] heavyMetals = csv[++pos].split(",");
@@ -239,8 +238,8 @@ public class BacteriaImporterService {
             String antiPEN = csv[++pos].trim();
             String antiMUP = csv[++pos].trim();
             String antiVAN = csv[++pos].trim();
-
             String antiCOL = csv[++pos].trim();
+
             Antibiogram antibiogram = Antibiogram.builder().mer(antiMER).etp(antiETP).ipm(antiIPM).cro(antiCRO).caz(antiCAZ).cfx(antiCFX).cpm(antiCPM)
                 .ctx(antiCTX).nal(antiNAL).cip(antiCIP).amc(antiAMC).atm(antiATM).ami(antiAMI).gen(antiGEN).sxt(antiSXT).eno(antiENO).chl(antiCHL)
                 .fos(antiFOS).cep(antiCEP).ctf(antiCTF).amp(antiAMP).tet(antiTET)
