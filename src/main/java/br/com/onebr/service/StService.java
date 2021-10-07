@@ -17,7 +17,7 @@ public class StService {
 
     private static final int MIN = 1;
 
-    private static final int MAX = 10000;
+    private static final int MAX = 12000;
 
     @Cacheable(value = ST_CACHE, key = "#root.methodName")
     public List<String> findAll() {
