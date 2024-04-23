@@ -23,6 +23,7 @@ public class StService {
     public List<String> findAll() {
         final ArrayList<String> sts = new ArrayList<>();
         IntStream.range(MIN, MAX).forEach(i -> sts.add(String.format(PREFIX, i)));
+        sts.add(String.format(PREFIX, 641).concat("*"));
 
         return sts;
     }
