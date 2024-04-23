@@ -5,5 +5,7 @@ public enum TeamTitle {
     INSTRUCTOR,
     POST_DOC_STUDENT,
     DOC_STUDENT,
-    MASTERING
+    MASTERING,
+    SCIENTIFIC_INITIATION,
+    ALUMNI // Egresso
 }
