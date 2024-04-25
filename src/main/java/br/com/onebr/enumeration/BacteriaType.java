@@ -18,7 +18,8 @@ public enum BacteriaType {
     SP_BR(10),
     SL_BR(11),
     KO_BR(12),
-    CV_19(13);
+    CV_19(13),
+    EF_SPP_BR(14);
 
     long id;
 

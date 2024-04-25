@@ -1,0 +1,1 @@
+INSERT INTO specie(name, fk_specie_group) VALUES('Enterococcus spp', (SELECT s.id FROM specie s WHERE s.fk_specie_group IS NULL));
