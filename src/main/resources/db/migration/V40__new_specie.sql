@@ -1,0 +1,1 @@
+INSERT INTO specie(name) VALUES('Enterobacter cloacae complex');
