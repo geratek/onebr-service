@@ -4,6 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 analytics.json
+README_INTERNAL.md
 
 ### STS ###
 .apt_generated
