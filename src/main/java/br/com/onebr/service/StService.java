@@ -24,6 +24,7 @@ public class StService {
         final ArrayList<String> sts = new ArrayList<>();
         IntStream.range(MIN, MAX).forEach(i -> sts.add(String.format(PREFIX, i)));
         sts.add(String.format(PREFIX, 641).concat("*"));
+        sts.add(String.format(PREFIX, 15579));
 
         return sts;
     }
