@@ -7,5 +7,6 @@ public enum TeamTitle {
     DOC_STUDENT,
     MASTERING,
     SCIENTIFIC_INITIATION,
-    ALUMNI // Egresso
+    ALUMNI, // Egresso
+    ALUMNI_IC // Egresso IC (iniciação científica)
 }
