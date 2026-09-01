@@ -34,25 +34,11 @@ public enum BacteriaType {
     ECC_CD(26),         // Enterobacter chengduensis
     ECC_AB(27),         // Enterobacter asburiae
     ECC_S(28),          // Enterobacter soli
-    ECC_HX(29)          // Enterobacter huaxiensis
+    ECC_HX(29),         // Enterobacter huaxiensis
+    ECC_XX(30),         // Enterobacter sp.
+    ECC_XXY(31)         // Enterobacter quasiroggenkampii
     ;
 
-    /*   insert into specie ("name" , fk_specie_group) values('Enterobacter xiangfangensis', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter cloacae', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter ludwigii', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter intestinihominis', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter roggenkampii', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter kobei', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter bugandensis', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter hormaechei', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter mori', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter adelaidei', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter chengduensis', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter asburiae', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter soli', 15);
-       insert into specie ("name" , fk_specie_group) values('Enterobacter huaxiensis', 15);
-
-       */
     long id;
 
     BacteriaType(int id) {
