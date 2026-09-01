@@ -1,0 +1,14 @@
+insert into specie (id, "name" , fk_specie_group) values(16,'Enterobacter xiangfangensis', 15);
+insert into specie (id, "name" , fk_specie_group) values(17,'Enterobacter cloacae', 15);
+insert into specie (id, "name" , fk_specie_group) values(18,'Enterobacter ludwigii', 15);
+insert into specie (id, "name" , fk_specie_group) values(19,'Enterobacter intestinihominis', 15);
+insert into specie (id, "name" , fk_specie_group) values(20,'Enterobacter roggenkampii', 15);
+insert into specie (id, "name" , fk_specie_group) values(21,'Enterobacter kobei', 15);
+insert into specie (id, "name" , fk_specie_group) values(22,'Enterobacter bugandensis', 15);
+insert into specie (id, "name" , fk_specie_group) values(23,'Enterobacter hormaechei', 15);
+insert into specie (id, "name" , fk_specie_group) values(24,'Enterobacter mori', 15);
+insert into specie (id, "name" , fk_specie_group) values(25,'Enterobacter adelaidei', 15);
+insert into specie (id, "name" , fk_specie_group) values(26,'Enterobacter chengduensis', 15);
+insert into specie (id, "name" , fk_specie_group) values(27,'Enterobacter asburiae', 15);
+insert into specie (id, "name" , fk_specie_group) values(28,'Enterobacter soli', 15);
+insert into specie (id, "name" , fk_specie_group) values(29,'Enterobacter huaxiensis', 15);
