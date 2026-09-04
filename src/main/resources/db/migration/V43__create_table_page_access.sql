@@ -12,9 +12,13 @@ ALTER TABLE page_access ALTER COLUMN id SET DEFAULT nextval('seq_page_access');
 
 CREATE UNIQUE INDEX page_access_path_idx ON page_access ("path");
 
--- Baseline seed: historical page views migrated from Google Analytics (Universal
--- Analytics view 222212743, range 2019-01-01..2024-06-30, when UA stopped serving
--- data). Add one row per tracked path with the last known GA "ga:pageviews" total
--- so the counter continues from the real number instead of restarting at zero.
+-- Baseline seed for the site-wide page-view counter.
 --
--- INSERT INTO page_access (path, hits) VALUES ('/', 123456);
+-- The original figure lived in Google Analytics (Universal Analytics view
+-- 222212743). UA and its APIs were shut down and the data deleted by Google in
+-- 2024, and the site was never migrated to GA4, so the real historical total is
+-- unrecoverable. This value is an ESTIMATE: current average page views/day from
+-- the nginx access logs (the only ~10 days still retained) extrapolated linearly
+-- over the site's lifetime since ~2020-10. It very likely overstates the early
+-- years; treat it as an order of magnitude, not an exact count.
+INSERT INTO page_access (path, hits) VALUES ('/', 7328602);
